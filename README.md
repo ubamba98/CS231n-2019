@@ -11,6 +11,8 @@ Notes and assignment solution to http://cs231n.stanford.edu
 	* [Notebook](./assignment1/softmax_solution.ipynb), [softmax](./assignment1/cs231n/classifiers/softmax.py)
 * Two-Layer Neural Network solution
 	* [Notebook](./assignment1/two_layer_net_solution.ipynb), [neural_net](./assignment1/cs231n/classifiers/neural_net.py)
+* Higher Level Representations: Image Features solution
+	* [Notebook](./assignment1/features_solution.ipynb)
 
 ### Notes
 * [Hinge loss derivative](./Notes/hinge_loss.pdf)
