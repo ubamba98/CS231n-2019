@@ -105,3 +105,6 @@ venv.bak/
 
 #dataset_folders
 cifar-10-batches-py/
+
+#vscode
+.vscode
