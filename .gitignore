@@ -107,4 +107,4 @@ venv.bak/
 cifar-10-batches-py/
 
 #vscode
-.vscode
+.vscode/

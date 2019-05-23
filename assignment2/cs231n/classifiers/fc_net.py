@@ -198,8 +198,12 @@ class FullyConnectedNet(object):
         # parameters should be initialized to zeros.                               #
         ############################################################################
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
-
-        pass
+        hidden_dims = hidden_dims + [num_classes]
+        last_input = input_dim
+        for i, hd in enumerate(hidden_dims):
+          self.params['W'+str(i+1)] = np.random.randn(last_input, hd)*weight_scale
+          self.params['b'+str(i+1)] = np.zeros(hd)
+          last_input = hd
 
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
         ############################################################################
@@ -262,7 +266,12 @@ class FullyConnectedNet(object):
         ############################################################################
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-        pass
+        in_ = X
+        cache = {}
+        for i in range(self.num_layers-1):
+          in_, cache['layer'+str(i+1)] = affine_forward(in_, self.params['W'+str(i+1)], self.params['b'+str(i+1)])
+          in_, cache['layer'+str(i+1)+'_relu'] = relu_forward(in_)
+        scores, cache['layer'+str(self.num_layers)] = affine_forward(in_, self.params['W'+str(self.num_layers)], self.params['b'+str(self.num_layers)])
 
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
         ############################################################################
@@ -289,8 +298,26 @@ class FullyConnectedNet(object):
         ############################################################################
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-        pass
+        N = X.shape[0]
+        scores = np.exp(scores)
+        correct_class_score = scores[range(N), y].reshape(-1,1)
+        loss = -np.sum(np.log(correct_class_score/np.sum(scores, axis=1).reshape(-1,1)))/N
+        for i in range(self.num_layers):
+          loss += 0.5*self.reg*np.sum(np.square(self.params['W'+str(i+1)]))
+        
+        grad = scores/np.sum(scores,axis=1).reshape(-1,1)
+        grad[range(N), y] -= 1
+        grad, grads['W'+str(self.num_layers)], grads['b'+str(self.num_layers)] = affine_backward(grad, cache['layer'+str(self.num_layers)])
+        grads['W'+str(self.num_layers)]/= N
+        grads['W'+str(self.num_layers)] += self.reg*self.params['W'+str(self.num_layers)]
+        grads['b'+str(self.num_layers)]/= N
+        for i in range(self.num_layers-1, 0, -1):
+          grad = relu_backward(grad, cache['layer'+str(i)+'_relu'])
 
+          grad, grads['W'+str(i)], grads['b'+str(i)] = affine_backward(grad, cache['layer'+str(i)])
+          grads['W'+str(i)]/= N
+          grads['W'+str(i)] += self.reg*self.params['W'+str(i)]
+          grads['b'+str(i)]/= N
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
         ############################################################################
         #                             END OF YOUR CODE                             #
