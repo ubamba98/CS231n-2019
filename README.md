@@ -14,6 +14,12 @@ Notes and assignment solution to http://cs231n.stanford.edu
 * Higher Level Representations: Image Features solution
 	* [Notebook](./assignment1/features_solution.ipynb)
 
+
+### [Assignment 2](https://cs231n.github.io/assignments2019/assignment2/)
+
+* Fully-connected Neural Network
+	* [Notebook](./assignment2/FullyConnectedNets_solution.ipynb), [fc_net](./assignment2/cs231n/classifiers/fc_net.py), [optim](./assignment2/cs231n/optim.py), [layers](./assignment2/cs231n/layers.py)
+
 ### Notes
 * [Hinge loss derivative](./Notes/hinge_loss.pdf)
 * [Softmax loss derivative](./Notes/softmax_loss.pdf)
