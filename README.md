@@ -24,3 +24,4 @@ Notes and assignment solution to http://cs231n.stanford.edu
 * [Hinge loss derivative](./Notes/hinge_loss.pdf)
 * [Softmax loss derivative](./Notes/softmax_loss.pdf)
 * [Computational graph 2-layer-NN](./Notes/computational_graph_2-layer-NN.pdf)
+* [Batchnorm computational graph](./Notes/batchnorm_computational_graph.pdf)

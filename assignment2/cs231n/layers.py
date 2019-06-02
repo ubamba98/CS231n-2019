@@ -196,8 +196,14 @@ def batchnorm_forward(x, gamma, beta, bn_param):
         #######################################################################
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-        pass
-
+        mu = np.mean(x, axis=0)
+        var =  np.var(x, axis=0)
+        running_mean = momentum * running_mean + (1 - momentum) * mu
+        running_var = momentum * running_var + (1 - momentum) * var
+        std = np.sqrt(var + eps)
+        out_i = (x-mu)/std
+        out = gamma*out_i + beta
+        cache = {"x":x, "mu": mu, "var": var, "std":std, "out_i": out_i, "gamma":gamma}
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
         #######################################################################
         #                           END OF YOUR CODE                          #
@@ -211,7 +217,7 @@ def batchnorm_forward(x, gamma, beta, bn_param):
         #######################################################################
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-        pass
+        out = gamma*(x-running_mean)/np.sqrt(running_var + eps) + beta
 
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
         #######################################################################
@@ -252,8 +258,21 @@ def batchnorm_backward(dout, cache):
     # might prove to be helpful.                                              #
     ###########################################################################
     # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
+    x = cache["x"]
+    mu = cache["mu"]
+    var = cache["var"]
+    std = cache["std"] 
+    out_i = cache["out_i"]
+    gamma = cache["gamma"]
+    N, _ = x.shape
 
-    pass
+    dbeta = np.sum(dout, axis=0)
+    dgamma = np.sum(dout*out_i, axis=0)
+
+    k = np.sum( dout *gamma * (x-mu), axis=0)
+    k_star = -k/(2*np.power(std,3)*N)
+    phi = dout * gamma/ std + k_star * 2 * (x- mu)
+    dx = phi -np.sum(phi, axis=0)/N
 
     # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
     ###########################################################################
