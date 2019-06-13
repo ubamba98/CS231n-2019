@@ -25,3 +25,4 @@ Notes and assignment solution to http://cs231n.stanford.edu
 * [Softmax loss derivative](./Notes/softmax_loss.pdf)
 * [Computational graph 2-layer-NN](./Notes/computational_graph_2-layer-NN.pdf)
 * [Batchnorm computational graph](./Notes/batchnorm_computational_graph.pdf)
+* [Batchnorm alt](./Notes/batchnorm_alt.pdf)
