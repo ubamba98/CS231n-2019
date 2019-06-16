@@ -203,6 +203,9 @@ class FullyConnectedNet(object):
         for i, hd in enumerate(hidden_dims):
           self.params['W'+str(i+1)] = np.random.randn(last_input, hd)*weight_scale
           self.params['b'+str(i+1)] = np.zeros(hd)
+          if self.normalization=='batchnorm' and i < len(hidden_dims)-1:
+            self.params['gamma'+str(i+1)] = np.ones(hd)
+            self.params['beta'+str(i+1)] = np.zeros(hd)
           last_input = hd
 
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
@@ -270,6 +273,8 @@ class FullyConnectedNet(object):
         cache = {}
         for i in range(self.num_layers-1):
           in_, cache['layer'+str(i+1)] = affine_forward(in_, self.params['W'+str(i+1)], self.params['b'+str(i+1)])
+          if self.normalization=='batchnorm':
+            in_, cache['layer'+str(i+1)+'_bn'] = batchnorm_forward(in_, self.params['gamma'+str(i+1)], self.params['beta'+str(i+1)], self.bn_params[i])
           in_, cache['layer'+str(i+1)+'_relu'] = relu_forward(in_)
         scores, cache['layer'+str(self.num_layers)] = affine_forward(in_, self.params['W'+str(self.num_layers)], self.params['b'+str(self.num_layers)])
 
@@ -313,7 +318,10 @@ class FullyConnectedNet(object):
         grads['b'+str(self.num_layers)]/= N
         for i in range(self.num_layers-1, 0, -1):
           grad = relu_backward(grad, cache['layer'+str(i)+'_relu'])
-
+          if self.normalization=='batchnorm':
+            grad, grads['gamma'+str(i)], grads['beta'+str(i)] = batchnorm_backward_alt(grad, cache['layer'+str(i)+'_bn'])
+            grads['gamma'+str(i)]/=N
+            grads['beta'+str(i)]/=N
           grad, grads['W'+str(i)], grads['b'+str(i)] = affine_backward(grad, cache['layer'+str(i)])
           grads['W'+str(i)]/= N
           grads['W'+str(i)] += self.reg*self.params['W'+str(i)]

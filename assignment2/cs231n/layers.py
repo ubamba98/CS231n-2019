@@ -352,7 +352,7 @@ def layernorm_forward(x, gamma, beta, ln_param):
     - out: of shape (N, D)
     - cache: A tuple of values needed in the backward pass
     """
-    out, cache = None, None
+    out, cache = None, {}
     eps = ln_param.get('eps', 1e-5)
     ###########################################################################
     # TODO: Implement the training-time forward pass for layer norm.          #
@@ -366,7 +366,17 @@ def layernorm_forward(x, gamma, beta, ln_param):
     ###########################################################################
     # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-    pass
+    mu = np.mean(x, axis=1)[...,None]
+    var = np.var(x, axis=1)[..., None]
+    std = np.sqrt(var+eps)
+    out = gamma * (x-mu)/std +beta
+    
+    cache['std'] = std
+    cache['mu'] = mu
+    cache['var'] = var
+    cache['x'] = x
+    cache['gamma'] = gamma
+    cache['beta'] = beta
 
     # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
     ###########################################################################
@@ -401,8 +411,20 @@ def layernorm_backward(dout, cache):
     ###########################################################################
     # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
-    pass
+    std = cache['std'] 
+    mu = cache['mu']
+    var = cache['var']
+    x = cache['x'] 
+    gamma = cache['gamma']
+    beta = cache['beta']
+    _, D = x.shape
 
+    dbeta = np.sum(dout, axis=0)
+    dgamma = np.sum(dout*(x-mu)/std, axis=0)
+    dmu_dout_gamma = np.sum(dout*gamma, axis=1)[...,None]/D
+    dvar_dout_gamma = 2/D * np.sum(gamma*(x-mu)*dout, axis=1)[...,None]
+    dstd_dout_gamma = dvar_dout_gamma/(2*std)
+    dx = ((gamma*dout - dmu_dout_gamma)*std - dstd_dout_gamma*(x-mu))/std**2
     # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
     ###########################################################################
     #                             END OF YOUR CODE                            #
