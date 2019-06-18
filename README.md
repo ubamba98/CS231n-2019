@@ -20,7 +20,9 @@ Notes and assignment solution to http://cs231n.stanford.edu
 * Fully-connected Neural Network
 	* [Notebook](./assignment2/FullyConnectedNets_solution.ipynb), [optim](./assignment2/cs231n/optim.py)
 * Batch Normalization
-	* [Notebook](./assignment2/BatchNormalization_solution.ipynb), [fc_net](./assignment2/cs231n/classifiers/fc_net.py), [optim](./assignment2/cs231n/optim.py), [layers](./assignment2/cs231n/layers.py)
+	* [Notebook](./assignment2/BatchNormalization_solution.ipynb)
+* Dropout
+	* [Notebook](./assignment2/Dropout_solution.ipynb), [fc_net](./assignment2/cs231n/classifiers/fc_net.py), [layers](./assignment2/cs231n/layers.py)
 
 ### Notes
 * [Hinge loss derivative](./Notes/hinge_loss.pdf)

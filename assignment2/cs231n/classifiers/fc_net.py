@@ -278,6 +278,8 @@ class FullyConnectedNet(object):
           if self.normalization=='layernorm':
             in_, cache['layer'+str(i+1)+'_ln'] = layernorm_forward(in_, self.params['gamma'+str(i+1)], self.params['beta'+str(i+1)], self.bn_params[i])
           in_, cache['layer'+str(i+1)+'_relu'] = relu_forward(in_)
+          if self.use_dropout:
+            in_, cache['layer'+str(i+1)+'_dropout'] = dropout_forward(in_,  self.dropout_param)
         scores, cache['layer'+str(self.num_layers)] = affine_forward(in_, self.params['W'+str(self.num_layers)], self.params['b'+str(self.num_layers)])
 
         # *****END OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
@@ -306,19 +308,17 @@ class FullyConnectedNet(object):
         # *****START OF YOUR CODE (DO NOT DELETE/MODIFY THIS LINE)*****
 
         N = X.shape[0]
-        scores = np.exp(scores)
-        correct_class_score = scores[range(N), y].reshape(-1,1)
-        loss = -np.sum(np.log(correct_class_score/np.sum(scores, axis=1).reshape(-1,1)))/N
+        loss, grad = softmax_loss(scores, y)
         for i in range(self.num_layers):
           loss += 0.5*self.reg*np.sum(np.square(self.params['W'+str(i+1)]))
-        
-        grad = scores/np.sum(scores,axis=1).reshape(-1,1)
-        grad[range(N), y] -= 1
+          
         grad, grads['W'+str(self.num_layers)], grads['b'+str(self.num_layers)] = affine_backward(grad, cache['layer'+str(self.num_layers)])
         grads['W'+str(self.num_layers)]/= N
         grads['W'+str(self.num_layers)] += self.reg*self.params['W'+str(self.num_layers)]
         grads['b'+str(self.num_layers)]/= N
         for i in range(self.num_layers-1, 0, -1):
+          if self.use_dropout:
+            grad = dropout_backward(grad, cache['layer'+str(i)+'_dropout'])
           grad = relu_backward(grad, cache['layer'+str(i)+'_relu'])
           if self.normalization=='batchnorm':
             grad, grads['gamma'+str(i)], grads['beta'+str(i)] = batchnorm_backward_alt(grad, cache['layer'+str(i)+'_bn'])
