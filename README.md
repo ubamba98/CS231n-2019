@@ -24,7 +24,9 @@ Notes and assignment solution to http://cs231n.stanford.edu
 * Dropout
 	* [Notebook](./assignment2/Dropout_solution.ipynb), [fc_net](./assignment2/cs231n/classifiers/fc_net.py)
 * Convolutional Networks
-	* [Notebook](./assignment2/Dropout_solution.ipynb), [cnn](./assignment2/cs231n/classifiers/cnn.py), [layers](./assignment2/cs231n/layers.py)
+	* [Notebook](./assignment2/ConvolutionalNetworks_solution.ipynb), [cnn](./assignment2/cs231n/classifiers/cnn.py), [layers](./assignment2/cs231n/layers.py)
+* PyTorch on CIFAR-10
+	* [Notebook](./assignment2/PyTorch_solution.ipynb)
 
 ### Notes
 * [Hinge loss derivative](./Notes/hinge_loss.pdf)
