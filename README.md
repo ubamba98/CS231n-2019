@@ -22,7 +22,9 @@ Notes and assignment solution to http://cs231n.stanford.edu
 * Batch Normalization
 	* [Notebook](./assignment2/BatchNormalization_solution.ipynb)
 * Dropout
-	* [Notebook](./assignment2/Dropout_solution.ipynb), [fc_net](./assignment2/cs231n/classifiers/fc_net.py), [layers](./assignment2/cs231n/layers.py)
+	* [Notebook](./assignment2/Dropout_solution.ipynb), [fc_net](./assignment2/cs231n/classifiers/fc_net.py)
+* Convolutional Networks
+	* [Notebook](./assignment2/Dropout_solution.ipynb), [cnn](./assignment2/cs231n/classifiers/cnn.py), [layers](./assignment2/cs231n/layers.py)
 
 ### Notes
 * [Hinge loss derivative](./Notes/hinge_loss.pdf)
