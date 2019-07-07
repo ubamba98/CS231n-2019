@@ -28,6 +28,10 @@ Notes and assignment solution to http://cs231n.stanford.edu
 * PyTorch on CIFAR-10
 	* [Notebook](./assignment2/PyTorch_solution.ipynb)
 
+### [Assignment 3](https://cs231n.github.io/assignments2019/assignment3/)
+* Image Captioning with Vanilla RNNs
+	* [Notebook](./assignment3/RNN_Captioning_solution.ipynb), [rnn_layers](./assignment3/cs231n/rnn_layers.py), [rnn](./assignment3/cs231n/classifiers/rnn.py)
+
 ### Notes
 * [Hinge loss derivative](./Notes/hinge_loss.pdf)
 * [Softmax loss derivative](./Notes/softmax_loss.pdf)
