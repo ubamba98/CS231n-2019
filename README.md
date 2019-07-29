@@ -30,7 +30,9 @@ Notes and assignment solution to http://cs231n.stanford.edu
 
 ### [Assignment 3](https://cs231n.github.io/assignments2019/assignment3/)
 * Image Captioning with Vanilla RNNs
-	* [Notebook](./assignment3/RNN_Captioning_solution.ipynb), [rnn_layers](./assignment3/cs231n/rnn_layers.py), [rnn](./assignment3/cs231n/classifiers/rnn.py)
+	* [Notebook](./assignment3/RNN_Captioning_solution.ipynb)
+* Image Captioning with LSTMs
+	* [Notebook](./assignment3/LSTM_Captioning_solution.ipynb), [rnn_layers](./assignment3/cs231n/rnn_layers.py), [rnn](./assignment3/cs231n/classifiers/rnn.py)
 
 ### Notes
 * [Hinge loss derivative](./Notes/hinge_loss.pdf)
